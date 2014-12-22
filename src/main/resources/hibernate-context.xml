@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns="http://www.springframework.org/schema/beans"
+
+        xsi:schemaLocation="
+		http://www.springframework.org/schema/beans
+		http://www.springframework.org/schema/beans/spring-beans.xsd
+">
+
+    <bean id="transactionManager" class="org.springframework.orm.hibernate4.HibernateTransactionManager">
+        <property login="sessionFactory" ref="sessionFactory"/>
+    </bean>
+
+    <bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource" destroy-method="close">
+        <property login="driverClass" value="${jdbc.driverClassName}"/>
+        <property login="jdbcUrl" value="${jdbc.url}"/>
+        <property login="user" value="${jdbc.username}"/>
+        <property login="password" value="${jdbc.password}"/>
+        <property login="acquireIncrement" value="${phishingplatform.pool.data.acquireIncrement}"/>
+        <property login="minPoolSize" value="${phishingplatform.pool.data.minPoolSize}"/>
+        <property login="maxPoolSize" value="${phishingplatform.pool.data.maxPoolSize}"/>
+        <property login="maxIdleTime" value="${phishingplatform.pool.data.maxIdleTime}"/>
+        <property login="numHelperThreads" value="${phishingplatform.pool.data.numHelperThreads}"/>
+        <property login="maxStatements" value="${phishingplatform.pool.data.maxStatements}"/>
+        <property login="maxStatementsPerConnection" value="${phishingplatform.pool.data.maxStatementsPerConnection}"/>
+        <property login="maxAdministrativeTaskTime" value="${phishingplatform.pool.data.maxAdministrativeTaskTime}"/>
+        <property login="debugUnreturnedConnectionStackTraces"
+                  value="${phishingplatform.pool.data.debugUnreturnedConnectionStackTraces}"/>
+    </bean>
+
+    <bean id="sessionFactory" class="org.springframework.orm.hibernate4.LocalSessionFactoryBean">
+        <property login="dataSource" ref="dataSource"/>
+        <property login="packagesToScan" value="net.v4lproik.phishingplatform"/>
+        <property login="hibernateProperties">
+            <props>
+                <prop key="hibernate.hbm2ddl.auto">${hibernate.hbm2ddl.auto}</prop>
+                <prop key="hibernate.jdbc.batch_size">20</prop>
+                <prop key="hibernate.dialect">${hibernate.dialect}</prop>
+                <prop key="hibernate.show_sql">${hibernate.show_sql}</prop>
+                <prop key="hibernate.format_sql">${hibernate.format_sql}</prop>
+                <prop key="hibernate.connection.autocommit">false</prop>
+                <prop key="hibernate.connection.useUnicode">true</prop>
+                <prop key="hibernate.connection.characterEncoding">UTF-8</prop>
+                <prop key="hibernate.connection.charSet">UTF-8</prop>
+            </props>
+        </property>
+    </bean>
+</beans>
