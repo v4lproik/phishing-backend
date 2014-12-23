@@ -1,0 +1,5 @@
+ Version 0.2.5:  (Released: December 13th, 2014)
+==================================================================
+    + Added log4j debug
+    + Fixed Access-Control-* issues [SimpleCORSFilter class]
+    + Added Cookie Exception handling

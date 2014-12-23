@@ -9,30 +9,30 @@
 ">
 
     <bean id="transactionManager" class="org.springframework.orm.hibernate4.HibernateTransactionManager">
-        <property login="sessionFactory" ref="sessionFactory"/>
+        <property name="sessionFactory" ref="sessionFactory"/>
     </bean>
 
     <bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource" destroy-method="close">
-        <property login="driverClass" value="${jdbc.driverClassName}"/>
-        <property login="jdbcUrl" value="${jdbc.url}"/>
-        <property login="user" value="${jdbc.username}"/>
-        <property login="password" value="${jdbc.password}"/>
-        <property login="acquireIncrement" value="${phishingplatform.pool.data.acquireIncrement}"/>
-        <property login="minPoolSize" value="${phishingplatform.pool.data.minPoolSize}"/>
-        <property login="maxPoolSize" value="${phishingplatform.pool.data.maxPoolSize}"/>
-        <property login="maxIdleTime" value="${phishingplatform.pool.data.maxIdleTime}"/>
-        <property login="numHelperThreads" value="${phishingplatform.pool.data.numHelperThreads}"/>
-        <property login="maxStatements" value="${phishingplatform.pool.data.maxStatements}"/>
-        <property login="maxStatementsPerConnection" value="${phishingplatform.pool.data.maxStatementsPerConnection}"/>
-        <property login="maxAdministrativeTaskTime" value="${phishingplatform.pool.data.maxAdministrativeTaskTime}"/>
-        <property login="debugUnreturnedConnectionStackTraces"
+        <property name="driverClass" value="${jdbc.driverClassName}"/>
+        <property name="jdbcUrl" value="${jdbc.url}"/>
+        <property name="user" value="${jdbc.username}"/>
+        <property name="password" value="${jdbc.password}"/>
+        <property name="acquireIncrement" value="${phishingplatform.pool.data.acquireIncrement}"/>
+        <property name="minPoolSize" value="${phishingplatform.pool.data.minPoolSize}"/>
+        <property name="maxPoolSize" value="${phishingplatform.pool.data.maxPoolSize}"/>
+        <property name="maxIdleTime" value="${phishingplatform.pool.data.maxIdleTime}"/>
+        <property name="numHelperThreads" value="${phishingplatform.pool.data.numHelperThreads}"/>
+        <property name="maxStatements" value="${phishingplatform.pool.data.maxStatements}"/>
+        <property name="maxStatementsPerConnection" value="${phishingplatform.pool.data.maxStatementsPerConnection}"/>
+        <property name="maxAdministrativeTaskTime" value="${phishingplatform.pool.data.maxAdministrativeTaskTime}"/>
+        <property name="debugUnreturnedConnectionStackTraces"
                   value="${phishingplatform.pool.data.debugUnreturnedConnectionStackTraces}"/>
     </bean>
 
     <bean id="sessionFactory" class="org.springframework.orm.hibernate4.LocalSessionFactoryBean">
-        <property login="dataSource" ref="dataSource"/>
-        <property login="packagesToScan" value="net.v4lproik.phishingplatform"/>
-        <property login="hibernateProperties">
+        <property name="dataSource" ref="dataSource"/>
+        <property name="packagesToScan" value="net.v4lproik.phishingplatform"/>
+        <property name="hibernateProperties">
             <props>
                 <prop key="hibernate.hbm2ddl.auto">${hibernate.hbm2ddl.auto}</prop>
                 <prop key="hibernate.jdbc.batch_size">20</prop>

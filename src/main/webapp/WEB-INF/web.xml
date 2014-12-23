@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="2.5"
-         xmlns="http://java.sun.com/xml/ns/javaee"
+<web-app version="2.5" xmlns="http://java.sun.com/xml/ns/javaee"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd">
 
     <!-- load application-context.xml -->
     <context-param>
-        <param-login>contextConfigLocation</param-login>
+        <param-name>contextConfigLocation</param-name>
         <param-value>classpath:application-context.xml</param-value>
     </context-param>
 
@@ -15,17 +15,17 @@
 
     <!-- load spring dispatcher-config.xml -->
     <servlet>
-        <servlet-login>Spring MVC Dispatcher Servlet</servlet-login>
+        <servlet-name>Spring MVC Dispatcher Servlet</servlet-name>
         <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
         <init-param>
-            <param-login>contextConfigLocation</param-login>
+            <param-name>contextConfigLocation</param-name>
             <param-value>classpath:dispatcher-config.xml</param-value>
         </init-param>
         <load-on-startup>1</load-on-startup>
     </servlet>
 
     <servlet-mapping>
-        <servlet-login>Spring MVC Dispatcher Servlet</servlet-login>
+        <servlet-name>Spring MVC Dispatcher Servlet</servlet-name>
         <url-pattern>/*</url-pattern>
     </servlet-mapping>
 
@@ -35,16 +35,27 @@
     Only works with tomcat 7+ atm
     -->
     <filter>
-        <filter-login>Remote Address Filter</filter-login>
+        <filter-name>Remote Address Filter</filter-name>
         <filter-class>org.apache.catalina.filters.RemoteAddrFilter</filter-class>
         <init-param>
-            <param-login>allow</param-login>
+            <param-name>allow</param-name>
             <param-value>127.0.0.1</param-value>
         </init-param>
     </filter>
     <filter-mapping>
-        <filter-login>Remote Address Filter</filter-login>
+        <filter-name>Remote Address Filter</filter-name>
         <url-pattern>/admin/*</url-pattern>
+    </filter-mapping>
+
+
+    <filter>
+        <filter-name>cors</filter-name>
+        <filter-class>net.v4lproik.phishingplatform.mvc.controllers.SimpleCORSFilter</filter-class>
+    </filter>
+
+    <filter-mapping>
+        <filter-name>cors</filter-name>
+        <url-pattern>/*</url-pattern>
     </filter-mapping>
 
 </web-app>

@@ -22,9 +22,12 @@ Installation
     mvn compile war:war
 
 
-API (Not admin controller)
+API (User controller)
 ---------
-The url to send the data from the auth form is /user/auth (try yourself curl -H "Content-Type: application/json" -H "Accept: application/json" -H "Cookie: PHPSSID=authcookie" -d '{"name":"xyz","password":"xyz"}' http://localhost:8080/user/auth -vv)
+
+The url to send the data from the auth form is /user/auth.
+Try yourself with : curl -H "Content-Type: application/json" -H "Accept: application/json" -H "Cookie: PHPSSID=authcookie" -d '{"name":"xyz","password":"xyz"}' http://localhost:8080/user/auth -vv)
+
 Your login input has to be named "login" eg. <input login="login" ... />
 Your password input has to be named "password" eg. <input login="password" ... />
 
