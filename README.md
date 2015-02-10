@@ -36,3 +36,8 @@ Contributing
 ------------
 
 See [Contributing](CONTRIBUTING.md)
+
+
+Build Status
+------------
+[![Build Status](https://travis-ci.org/v4lproik/phishing-backend.svg?branch=master)](https://travis-ci.org/v4lproik/phishing-backend)
