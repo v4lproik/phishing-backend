@@ -18,7 +18,7 @@ Usage
 Installation
 -----------
 
-    cd phishing-backend
+    cd phishing-backend v 
     mvn compile war:war
 
 
@@ -26,10 +26,14 @@ API (User controller)
 ---------
 
 The url to send the data from the auth form is /user/auth.
-Try yourself with : curl -H "Content-Type: application/json" -H "Accept: application/json" -H "Cookie: PHPSSID=authcookie" -d '{"name":"xyz","password":"xyz"}' http://localhost:8080/user/auth -vv)
+Try yourself with : 
 
-Your login input has to be named "login" eg. <input login="login" ... />
-Your password input has to be named "password" eg. <input login="password" ... />
+    curl -H "Content-Type: application/json" -H "Cookie: PHPSSID=authcookie" -d '{"login":"xyz","password":"xyz"}' http://localhost:8080/user/auth -vv)
+
+The form needs to have at least these input fields with these names:
+
+    <input login="login" ... />
+    <input login="password" ... />
 
 
 Contributing
